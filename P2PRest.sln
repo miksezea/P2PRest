@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P2PRest", "P2PRest\P2PRest.csproj", "{19C8E665-8023-4291-AEDF-E08F35ADE6EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19C8E665-8023-4291-AEDF-E08F35ADE6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19C8E665-8023-4291-AEDF-E08F35ADE6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19C8E665-8023-4291-AEDF-E08F35ADE6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19C8E665-8023-4291-AEDF-E08F35ADE6EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C0DA8E0-2C12-4FE2-A04B-EAA56F9D7621}
+	EndGlobalSection
+EndGlobal
