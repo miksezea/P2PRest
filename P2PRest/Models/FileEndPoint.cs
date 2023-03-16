@@ -1,6 +1,6 @@
 ﻿namespace P2PRest.Models
 {
-    public class FileEndPoint
+    public class FileEndpoint
     {
         public string FileName { get; set; }
         public string Ip { get; set; }
