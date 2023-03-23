@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using P2PRest.Managers;
+using P2PRest.Repositories;
 using P2PRest.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace P2PRest.Controllers
 {
@@ -10,38 +8,74 @@ namespace P2PRest.Controllers
     [ApiController]
     public class FileEndpointsController : ControllerBase
     {
-        private FileEndpointsManager _manager = new FileEndpointsManager();
+        private FileEndpointsRepository _repository = new FileEndpointsRepository();
 
         // GET: api/<FileEndpointsController>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            IEnumerable<string> result = _repository.GetFileNames();
+            if (result == null || result.Count() <= 0)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
         // GET api/<FileEndpointsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{filename}")]
+        public ActionResult<IEnumerable<FileEndpoint>> Get(string filename)
         {
-            return "value";
+            IEnumerable<FileEndpoint> endpoints = _repository.GetEndpoints(filename);
+            if (endpoints == null || endpoints.Count() <= 0)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Ok(endpoints);
+            }
         }
 
         // POST api/<FileEndpointsController>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<FileEndpoint> Post([FromBody] FileEndpoint newFileEndpoint)
         {
-        }
-
-        // PUT api/<FileEndpointsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            FileEndpoint createdFileEndpoint = _repository.AddEndpoint(newFileEndpoint);
+            if (createdFileEndpoint == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Created($"api/fileendpoints/{createdFileEndpoint.FileName}", createdFileEndpoint);
+            }
         }
 
         // DELETE api/<FileEndpointsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpDelete("{filename}/{ip}/{port}")]
+        public ActionResult<FileEndpoint> Delete(string filename, string ip, int port)
         {
+            FileEndpoint? deletedFile = _repository.DeleteEndpoint(filename, ip, port);
+            if (deletedFile == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(deletedFile);
+            }
         }
     }
 }
